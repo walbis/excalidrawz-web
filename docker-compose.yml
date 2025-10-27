@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  db:
+    image: postgres:16-alpine
+    container_name: excalidrawz-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: excalidrawz
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Optional: Adminer (Database GUI)
+  adminer:
+    image: adminer:latest
+    container_name: excalidrawz-adminer
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      ADMINER_DEFAULT_SERVER: db
+
+volumes:
+  postgres_data:
+
+# Usage:
+# docker-compose up -d        # Start services
+# docker-compose down         # Stop services
+# docker-compose logs -f db   # View logs
+
+# Access:
+# PostgreSQL: localhost:5432
+# Adminer: http://localhost:8080
+#   Server: db
+#   Username: postgres
+#   Password: password
+#   Database: excalidrawz
