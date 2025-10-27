@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useImperativeHandle, forwardRef } from 'react';
 import type { ExcalidrawElement } from '@excalidraw/excalidraw/types/element/types';
 import type { AppState, BinaryFiles } from '@excalidraw/excalidraw/types/types';
 
