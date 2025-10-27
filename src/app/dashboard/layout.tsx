@@ -5,12 +5,14 @@ import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { Sidebar } from '@/components/sidebar/sidebar';
 import { WorkspaceSelector } from '@/components/workspace/workspace-selector';
-import { ReactNode, useState } from 'react';
+import { SearchModal } from '@/components/search/search-modal';
+import { ReactNode, useState, useEffect } from 'react';
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   const { data: session, status } = useSession();
   const router = useRouter();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [showSearch, setShowSearch] = useState(false);
 
   // Fetch workspaces
   const { data: workspaces } = useQuery({
@@ -18,6 +20,19 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
     queryFn: () => fetch('/api/workspaces').then((r) => r.json()),
     enabled: !!session,
   });
+
+  // Keyboard shortcut for search (Cmd+K or Ctrl+K)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setShowSearch(true);
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   if (status === 'loading') {
     return (
@@ -102,7 +117,11 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
 
           {/* User Menu */}
           <div className="flex items-center gap-4">
-            <button className="p-2 hover:bg-gray-100 rounded" title="Search">
+            <button
+              onClick={() => setShowSearch(true)}
+              className="p-2 hover:bg-gray-100 rounded"
+              title="Search (Cmd+K)"
+            >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path
                   strokeLinecap="round"
@@ -142,6 +161,9 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         {/* Page Content */}
         <div className="flex-1 overflow-auto">{children}</div>
       </main>
+
+      {/* Search Modal */}
+      <SearchModal isOpen={showSearch} onClose={() => setShowSearch(false)} />
     </div>
   );
 }
