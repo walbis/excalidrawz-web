@@ -2,6 +2,40 @@
 
 Team-based collaborative whiteboard platform powered by Excalidraw.
 
+## Features
+
+### Core Drawing Features
+- **Excalidraw Integration** - Full-featured drawing canvas with all Excalidraw capabilities
+- **Auto-Save** - Automatic saving with visual feedback (2-second debounce)
+- **Version History** - Automatic checkpoints with restore functionality
+- **File Organization** - Hierarchical folder structure (Groups)
+- **Import/Export** - Support for .excalidraw, PNG, SVG, PDF formats
+
+### Workspace & Team Management
+- **Multi-Workspace Support** - Create and manage multiple workspaces
+- **Role-Based Access Control** - Owner, Admin, Member, Viewer roles
+- **Team Invitations** - Email-based team member invitations
+- **Workspace Settings** - Customize workspace name and manage members
+
+### User Experience
+- **Global Search** - Fast file search with keyboard shortcut (⌘K/Ctrl+K)
+- **Responsive UI** - Modern, clean interface with Tailwind CSS
+- **Dark/Light Export** - Export drawings in light or dark mode
+- **File Browser** - Sidebar with collapsible folder tree
+- **Recent Files** - Quick access to recently edited files
+
+### Authentication & Security
+- **Multiple Auth Providers** - Google, GitHub, Email/Password
+- **Secure Sessions** - JWT-based authentication with NextAuth.js
+- **Protected Routes** - Server-side session validation
+- **Password Hashing** - bcrypt for secure password storage
+
+### Settings & Preferences
+- **Profile Management** - Update name, email, password
+- **Workspace Settings** - Manage workspace details and statistics
+- **Team Management** - Invite, remove, and change member roles
+- **Billing Dashboard** - View plans and payment information
+
 ## Quick Start
 
 ### Prerequisites
